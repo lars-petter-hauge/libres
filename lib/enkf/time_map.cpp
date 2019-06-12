@@ -222,7 +222,14 @@ static bool time_map_update__( time_map_type * map , int step , time_t update_ti
 
         if (ref_time != update_time) {
           updateOK = false;
-          res_log_error("Tried to load data where report step/data is incompatible with refcase - ignored");
+          char * msg = util_alloc_sprintf("Tried to load data where time (%d) "
+                                          "at report step (%d) is incompatible "
+                                          "with refcase time (%d) - ignored",
+                                          update_time, step, ref_time);
+
+
+          res_log_error(msg);
+          free(msg);
         }
       }
     }
